@@ -1,5 +1,7 @@
 {
   "name": "upcoming",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
