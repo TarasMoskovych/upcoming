@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { DataService } from './../core/services';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -7,6 +9,10 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private dataService: DataService) {
+    this.dataService.getPopular().subscribe(data => {
+      console.log(data);
+    });
+  }
 
 }
