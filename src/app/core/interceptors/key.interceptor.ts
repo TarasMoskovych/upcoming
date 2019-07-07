@@ -12,7 +12,7 @@ export class TokenInterceptor implements HttpInterceptor {
     if (req.url.includes('themoviedb')) {
       req = req.clone({
         setParams: {
-          api_key: '/** API Key goes here **/'
+          api_key: 'b1780b4019156be523cc1366813c0bd3'
         }
       });
     }

@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 import { origin } from './../configs';
 import { CoreModule } from './../core.module';
@@ -21,6 +22,6 @@ export class DataService {
           page, language: 'en-US',
         }
       })
-    });
+    }).pipe(map((data: any) => data.results));
   }
 }
