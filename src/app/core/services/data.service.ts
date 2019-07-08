@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { origin } from './../configs';
 import { CoreModule } from './../core.module';
 
+import { PopularMovies } from 'src/app/shared/models';
+
 @Injectable({
   providedIn: CoreModule
 })
@@ -22,6 +24,6 @@ export class DataService {
           page, language: 'en-US',
         }
       })
-    }).pipe(map((data: any) => data.results));
+    }).pipe(map((data: PopularMovies) => data.results));
   }
 }

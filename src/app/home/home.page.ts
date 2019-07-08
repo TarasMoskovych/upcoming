@@ -3,6 +3,7 @@ import { Storage } from '@ionic/storage';
 import { take } from 'rxjs/operators';
 
 import { DataService, LoaderService } from './../core/services';
+import { PopularMovie } from '../shared/models';
 
 @Component({
   selector: 'app-home',
@@ -45,7 +46,7 @@ export class HomePage implements OnInit {
   private getPopular(loader?: any) {
     this.dataService.getPopular('1')
     .pipe(take(1))
-    .subscribe(data => {
+    .subscribe((data: PopularMovie[]) => {
       this.movies = data;
 
       if (loader) { loader.dismiss(); }
