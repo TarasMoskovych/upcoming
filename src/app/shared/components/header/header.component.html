@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <img class="logo" src="assets/img/logo.png" alt="Logo">
+      <!-- {{ genre.name }} -->
+      Genre
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" (click)="openFavorites()" class="btn-txt">
+        <ion-icon name="star"></ion-icon>
+        Favs
+      </ion-button>
+      <ion-button size="small" (click)="openGenres()" class="btn-txt">
+        <ion-icon name="funnel"></ion-icon>
+        Filter
+      </ion-button>
+      <ion-button size="small" (click)="openSearchBar()">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
