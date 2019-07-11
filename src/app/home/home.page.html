@@ -1,7 +1,18 @@
 <app-header></app-header>
 
-<ion-content>
+<ion-content class="card-background-page">
   <ng-container *ngIf="movies.length > 0">
-    {{ movies | json }}
+    <ion-card *ngFor="let movie of movies">
+      <ng-container *ngIf="movie.backdrop_path; else noscreen">
+        <div class="game-image">
+          <img [src]="'https://image.tmdb.org/t/p/w780/' + movie.backdrop_path" alt="Image">
+        </div>
+        <ng-template #noscreen>
+          <div class="game-image">
+            <img [src]="assets/img.blank.png" alt="Image">
+          </div>
+        </ng-template>
+      </ng-container>
+    </ion-card>
   </ng-container>
 </ion-content>
