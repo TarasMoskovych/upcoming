@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { origin } from './../configs';
 import { CoreModule } from './../core.module';
 
-import { PopularMovies } from 'src/app/shared/models';
+import { Movies } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: CoreModule
@@ -24,6 +24,16 @@ export class DataService {
           page, language: 'en-US',
         }
       })
-    }).pipe(map((data: PopularMovies) => data.results));
+    }).pipe(map((data: Movies) => data.results));
+  }
+
+  getUpcoming(page: string = '1') {
+    return this.http.get(`${this.baseUrl}/movie/upcoming`, {
+      params: new HttpParams({
+        fromObject: {
+          page, language: 'en-US',
+        }
+      })
+    }).pipe(map((data: Movies) => data.results));
   }
 }

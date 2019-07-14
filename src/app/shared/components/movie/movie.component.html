@@ -1,0 +1,28 @@
+<ion-card (click)="onViewMore(movie.id)">
+  <div class="image-wrapper">
+    <ng-container *ngIf="movie.backdrop_path; else noscreen">
+      <img [src]="'https://image.tmdb.org/t/p/w780/' + movie.backdrop_path" alt="Image">
+    </ng-container>
+    <ng-template #noscreen>
+      <img src="assets/img/blank.png" alt="Image">
+    </ng-template>
+  </div>
+  <ng-container *ngIf="!favorites.includes(movie.id); else remove">
+    <ion-button fill="outline" size="small" (click)="addToFavorites(movie.id)">
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ng-container>
+  <ng-template #remove>
+    <ion-button fill="outline" size="small" (click)="removeFromFavorites(movie.id)">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ng-template>
+  <div class="text-wrapper">
+    <ion-card-title>
+      {{ movie.title }}
+    </ion-card-title>
+    <ion-card-subtitle>
+      {{ movie.release_date }}
+    </ion-card-subtitle>
+  </div>
+</ion-card>

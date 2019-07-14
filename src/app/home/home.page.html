@@ -1,18 +1,7 @@
-<app-header></app-header>
+<app-header (togglePopular)="onTogglePopular($event)"></app-header>
 
-<ion-content class="card-background-page">
+<ion-content>
   <ng-container *ngIf="movies.length > 0">
-    <ion-card *ngFor="let movie of movies">
-      <ng-container *ngIf="movie.backdrop_path; else noscreen">
-        <div class="game-image">
-          <img [src]="'https://image.tmdb.org/t/p/w780/' + movie.backdrop_path" alt="Image">
-        </div>
-        <ng-template #noscreen>
-          <div class="game-image">
-            <img [src]="assets/img.blank.png" alt="Image">
-          </div>
-        </ng-template>
-      </ng-container>
-    </ion-card>
+    <app-movie *ngFor="let movie of movies" [movie]="movie" [favorites]="favorites"></app-movie>
   </ng-container>
 </ion-content>

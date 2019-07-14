@@ -1,11 +1,11 @@
-export interface PopularMovies {
+export interface Movies {
   page?: number;
-  results?: PopularMovie[];
+  results?: Movie[];
   total_results?: number;
   total_pages?: number;
 }
 
-export interface PopularMovie {
+export interface Movie {
   poster_path?: string | null;
   adult?: boolean;
   overview?: string;

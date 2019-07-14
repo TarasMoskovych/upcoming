@@ -1,0 +1,44 @@
+ion-card {
+  border-radius: 0;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  width: 100%;
+
+  .text-wrapper {
+    bottom: 10%;
+    max-width: 80%;
+    padding-left: 10px;
+    position: absolute;
+  }
+
+  &-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  &-title,
+  &-subtitle {
+    color: #fff;
+  }
+
+  ion-button {
+    bottom: 15%;
+    font-size: .85em;
+    position: absolute;
+    right: 10px;
+  }
+
+  .image-wrapper::after {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%);
+    content: '';
+    display: block;
+    height: 150px;
+    margin-top: -150px;
+    opacity: .8;
+    position: relative;
+    width: 100%;
+  }
+}

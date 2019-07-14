@@ -6,13 +6,15 @@
       Genre
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button size="small" (click)="openFavorites()" class="btn-txt">
-        <ion-icon name="star"></ion-icon>
-        Favs
+      <ion-button size="small" (click)="openFavorites()">
+        <ion-icon slot="icon-only" name="star"></ion-icon>
       </ion-button>
-      <ion-button size="small" (click)="openGenres()" class="btn-txt">
-        <ion-icon name="funnel"></ion-icon>
-        Filter
+      <ion-button size="small" (click)="openGenres()">
+        <ion-icon slot="icon-only" name="funnel"></ion-icon>
+      </ion-button>
+      <ion-button size="small" (click)="onToggle()">
+        <ion-icon *ngIf="isPopular" name="arrow-up"></ion-icon>
+        <ion-icon *ngIf="!isPopular" name="arrow-down"></ion-icon>
       </ion-button>
       <ion-button size="small" (click)="openSearchBar()">
         <ion-icon slot="icon-only" name="search"></ion-icon>

@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage';
 import { take } from 'rxjs/operators';
 
 import { DataService, LoaderService } from './../core/services';
-import { PopularMovie } from '../shared/models';
+import { Movie } from '../shared/models';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ import { PopularMovie } from '../shared/models';
 export class HomePage implements OnInit {
   movies = [];
   favorites = [];
-  genre = { id: 1, name: 'Test' };
+  genre = { id: 1, name: 'Popular' };
 
   constructor(
     private dataService: DataService,
@@ -25,12 +25,16 @@ export class HomePage implements OnInit {
     this.loaderSerice.showLoader().then(this.initPage.bind(this));
   }
 
+  onTogglePopular(isPopular: boolean) {
+    this.getMovies(isPopular);
+  }
+
   private initPage(loader: any) {
     loader.present();
 
     Promise.resolve()
       .then(this.initializeStorage.bind(this))
-      .then(this.getPopular.bind(this, loader));
+      .then(this.getMovies.bind(this, true, loader));
   }
 
   private initializeStorage() {
@@ -43,13 +47,14 @@ export class HomePage implements OnInit {
     });
   }
 
-  private getPopular(loader?: any) {
-    this.dataService.getPopular('1')
-    .pipe(take(1))
-    .subscribe((data: PopularMovie[]) => {
-      this.movies = data;
+  private getMovies(isPopular: boolean = true, loader?: any) {
+    const sub$ = isPopular ? this.dataService.getPopular('1') : this.dataService.getUpcoming('1');
 
-      if (loader) { loader.dismiss(); }
-    });
+    sub$.pipe(take(1))
+      .subscribe((data: Movie[]) => {
+        this.movies = data;
+
+        if (loader) { loader.dismiss(); }
+      });
   }
 }
