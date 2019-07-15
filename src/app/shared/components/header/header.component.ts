@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { HeaderService } from 'src/app/core/services';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,8 +11,9 @@ export class HeaderComponent implements OnInit {
   @Output() togglePopular = new EventEmitter<boolean>();
 
   isPopular = true;
+  title$ = this.headerService.channel$;
 
-  constructor() { }
+  constructor(private headerService: HeaderService) { }
 
   ngOnInit() {}
 

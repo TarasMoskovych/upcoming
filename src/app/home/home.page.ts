@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { take } from 'rxjs/operators';
 
-import { DataService, LoaderService } from './../core/services';
-import { Movie } from '../shared/models';
+import { DataService, LoaderService, HeaderService } from './../core/services';
+import { Movie, IonInfiniteScrollCustomEvent } from '../shared/models';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +14,13 @@ export class HomePage implements OnInit {
   movies = [];
   favorites = [];
   genre = { id: 1, name: 'Popular' };
+  isPopular = true;
+  page = 1;
 
   constructor(
     private dataService: DataService,
     private storage: Storage,
+    private headerService: HeaderService,
     private loaderSerice: LoaderService
   ) { }
 
@@ -26,15 +29,22 @@ export class HomePage implements OnInit {
   }
 
   onTogglePopular(isPopular: boolean) {
-    this.getMovies(isPopular);
+    this.movies.length = 0;
+    this.page = 1;
+    this.isPopular = isPopular;
+    this.getMovies();
+
+    this.headerService.dispatch(this.isPopular ? 'Popular' : 'Upcoming');
   }
 
   private initPage(loader: any) {
     loader.present();
 
+    this.headerService.dispatch('Popular');
+
     Promise.resolve()
       .then(this.initializeStorage.bind(this))
-      .then(this.getMovies.bind(this, true, loader));
+      .then(this.getMovies.bind(this, () => loader.dismiss()));
   }
 
   private initializeStorage() {
@@ -47,14 +57,23 @@ export class HomePage implements OnInit {
     });
   }
 
-  private getMovies(isPopular: boolean = true, loader?: any) {
-    const sub$ = isPopular ? this.dataService.getPopular('1') : this.dataService.getUpcoming('1');
+  private getMovies(callback?: () => void) {
+    const page = this.page.toString();
+    const sub$ = this.isPopular ? this.dataService.getPopular(page) : this.dataService.getUpcoming(page);
 
     sub$.pipe(take(1))
       .subscribe((data: Movie[]) => {
-        this.movies = data;
+        this.movies = this.movies.concat(data);
 
-        if (loader) { loader.dismiss(); }
+        if (callback) { callback(); }
       });
+  }
+
+  onLoadMore(event: IonInfiniteScrollCustomEvent) {
+    this.page++;
+
+    this.getMovies(() => {
+      event.target.complete();
+    });
   }
 }

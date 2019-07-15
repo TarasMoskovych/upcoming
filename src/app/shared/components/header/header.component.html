@@ -2,8 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title>
       <img class="logo" src="assets/img/logo.png" alt="Logo">
-      <!-- {{ genre.name }} -->
-      Genre
+      {{ title$ | async }}
     </ion-title>
     <ion-buttons slot="end">
       <ion-button size="small" (click)="openFavorites()">
