@@ -37,6 +37,27 @@ export class HomePage implements OnInit {
     this.headerService.dispatch(this.isPopular ? 'Popular' : 'Upcoming');
   }
 
+  onAddToFavorites(id: number) {
+    if (!this.favorites.includes(id)) {
+      this.favorites.push(id);
+      this.saveFavorites();
+    }
+  }
+
+  onRemoveFromFavorites(id: number) {
+    const idx = this.favorites.findIndex(val => val === id);
+    this.favorites.splice(idx, 1);
+    this.saveFavorites();
+  }
+
+  onLoadMore(event: IonInfiniteScrollCustomEvent) {
+    this.page++;
+
+    this.getMovies(() => {
+      event.target.complete();
+    });
+  }
+
   private initPage(loader: any) {
     loader.present();
 
@@ -53,7 +74,7 @@ export class HomePage implements OnInit {
     });
 
     this.storage.get('favorites').then(val => {
-      val ? this.favorites = val : this.storage.set('favorites', this.favorites);
+      val ? this.favorites = val : this.saveFavorites();
     });
   }
 
@@ -69,11 +90,7 @@ export class HomePage implements OnInit {
       });
   }
 
-  onLoadMore(event: IonInfiniteScrollCustomEvent) {
-    this.page++;
-
-    this.getMovies(() => {
-      event.target.complete();
-    });
+  private saveFavorites() {
+    this.storage.set('favorites', this.favorites);
   }
 }

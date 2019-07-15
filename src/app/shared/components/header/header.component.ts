@@ -1,13 +1,15 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { HeaderService } from 'src/app/core/services';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   @Output() togglePopular = new EventEmitter<boolean>();
 
   isPopular = true;
@@ -15,9 +17,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private headerService: HeaderService) { }
 
-  ngOnInit() {}
 
-  openFavorites() {}
   openGenres() {}
   openSearchBar() {}
 

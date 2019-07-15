@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 import { Movie } from 'src/app/shared/models';
 
@@ -8,17 +8,20 @@ import { Movie } from 'src/app/shared/models';
   styleUrls: ['./movie.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MovieComponent implements OnInit {
+export class MovieComponent {
   @Input() movie: Movie;
-  @Input() favorites: Movie[];
+  @Input() favorites: Movie[] = [];
+  @Output() addToFavorites = new EventEmitter<number>();
+  @Output() removeFromFavorites = new EventEmitter<number>();
 
-  constructor() { }
+  onViewMore(id: any) {}
 
-  ngOnInit() {
+  onAddToFavorites(id: any) {
+    this.addToFavorites.emit(id);
   }
 
-  onViewMore() {}
-  addToFavorites() { }
-  removeFromFavorites() {}
+  onRemoveFromFavorites(id: any) {
+    this.removeFromFavorites.emit(id);
+  }
 
 }

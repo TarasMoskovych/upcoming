@@ -2,7 +2,13 @@
 
 <ion-content>
   <ng-container *ngIf="movies.length > 0">
-    <app-movie *ngFor="let movie of movies" [movie]="movie" [favorites]="favorites"></app-movie>
+    <app-movie
+      *ngFor="let movie of movies"
+      [movie]="movie"
+      [favorites]="favorites"
+      (addToFavorites)="onAddToFavorites($event)"
+      (removeFromFavorites)="onRemoveFromFavorites($event)"
+    ></app-movie>
   </ng-container>
   <app-view-more (viewMore)="onLoadMore($event)"></app-view-more>
 </ion-content>

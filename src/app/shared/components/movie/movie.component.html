@@ -8,12 +8,12 @@
     </ng-template>
   </div>
   <ng-container *ngIf="!favorites.includes(movie.id); else remove">
-    <ion-button fill="outline" size="small" (click)="addToFavorites(movie.id)">
+    <ion-button fill="outline" size="small" (click)="onAddToFavorites(movie.id)">
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
   </ng-container>
   <ng-template #remove>
-    <ion-button fill="outline" size="small" (click)="removeFromFavorites(movie.id)">
+    <ion-button fill="outline" size="small" (click)="onRemoveFromFavorites(movie.id)">
       <ion-icon slot="icon-only" name="close"></ion-icon>
     </ion-button>
   </ng-template>
