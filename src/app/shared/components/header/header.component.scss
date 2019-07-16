@@ -3,9 +3,18 @@ ion-header {
     height: 20px;
   }
 
-  .logo {
+  .logo,
+  .title-wrapper {
     position: relative;
+  }
+
+  .logo {
     top: 5px;
     width: 25px;
+  }
+
+  .title-wrapper {
+    font-weight: normal;
+    top: -5px;
   }
 }
