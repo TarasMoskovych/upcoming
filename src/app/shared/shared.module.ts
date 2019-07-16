@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { HeaderComponent, MovieComponent, ViewMoreComponent } from './components';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HeaderComponent, MovieComponent, ViewMoreComponent } from './components
   ],
   imports: [
     CommonModule,
+    RouterModule,
     FormsModule,
     IonicModule
   ],

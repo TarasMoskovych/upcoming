@@ -1,0 +1,13 @@
+<app-header (togglePopular)="onTogglePopular($event)"></app-header>
+
+<ion-content>
+  <ng-container *ngIf="favorites.length > 0">
+    <app-movie
+      *ngFor="let movie of favorites"
+      [movie]="movie"
+      [favorites]="favorites"
+      (addToFavorites)="onAddToFavorites($event)"
+      (removeFromFavorites)="onRemoveFromFavorites($event)"
+    ></app-movie>
+  </ng-container>
+</ion-content>

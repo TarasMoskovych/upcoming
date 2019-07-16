@@ -1,8 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 import { HeaderService } from 'src/app/core/services';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +14,6 @@ export class HeaderComponent {
   title$ = this.headerService.channel$;
 
   constructor(private headerService: HeaderService) { }
-
 
   openGenres() {}
   openSearchBar() {}

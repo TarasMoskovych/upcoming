@@ -11,8 +11,8 @@ import { Movie, IonInfiniteScrollCustomEvent } from '../shared/models';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  movies = [];
-  favorites = [];
+  movies: Movie[] = [];
+  favorites: Movie[] = [];
   genre = { id: 1, name: 'Popular' };
   isPopular = true;
   page = 1;
@@ -37,15 +37,17 @@ export class HomePage implements OnInit {
     this.headerService.dispatch(this.isPopular ? 'Popular' : 'Upcoming');
   }
 
-  onAddToFavorites(id: number) {
-    if (!this.favorites.includes(id)) {
-      this.favorites.push(id);
+  onAddToFavorites(movie: Movie) {
+    const idx = this.favorites.findIndex((m: Movie) => m.id === movie.id);
+
+    if (idx === -1) {
+      this.favorites.push(movie);
       this.saveFavorites();
     }
   }
 
   onRemoveFromFavorites(id: number) {
-    const idx = this.favorites.findIndex(val => val === id);
+    const idx = this.favorites.findIndex((movie: Movie) => movie.id === id);
     this.favorites.splice(idx, 1);
     this.saveFavorites();
   }

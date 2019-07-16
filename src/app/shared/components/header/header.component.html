@@ -1,14 +1,14 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="secondary">
-      <ion-button size="small" (click)="openFavorites()">
+      <ion-button size="small" routerLink="/favorites">
         <ion-icon slot="icon-only" name="star"></ion-icon>
       </ion-button>
       <ion-button size="small" (click)="openGenres()">
         <ion-icon slot="icon-only" name="funnel"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title routerLink="/home">
       <div class="title-wrapper">
         <img class="logo" src="assets/img/logo.png" alt="Logo">
         {{ title$ | async }}
