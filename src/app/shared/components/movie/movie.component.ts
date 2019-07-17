@@ -10,7 +10,7 @@ import { Movie } from 'src/app/shared/models';
 })
 export class MovieComponent {
   @Input() movie: Movie;
-  @Input() favorites: Movie[] = [];
+  @Input() isExists: boolean = false;
   @Output() addToFavorites = new EventEmitter<Movie>();
   @Output() removeFromFavorites = new EventEmitter<number>();
 
@@ -23,9 +23,4 @@ export class MovieComponent {
   onRemoveFromFavorites(id: number) {
     this.removeFromFavorites.emit(id);
   }
-
-  checkInFavorites(id: number) {
-    return this.favorites.findIndex((movie: Movie) => movie.id === id) !== -1;
-  }
-
 }

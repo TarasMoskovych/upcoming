@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { take } from 'rxjs/operators';
 
-import { DataService, LoaderService, HeaderService } from './../core/services';
+import { DataService, LoaderService, HeaderService, StorageService } from './../core/services';
 import { Movie, IonInfiniteScrollCustomEvent } from '../shared/models';
 
 @Component({
@@ -12,16 +11,15 @@ import { Movie, IonInfiniteScrollCustomEvent } from '../shared/models';
 })
 export class HomePage implements OnInit {
   movies: Movie[] = [];
-  favorites: Movie[] = [];
   genre = { id: 1, name: 'Popular' };
   isPopular = true;
   page = 1;
 
   constructor(
     private dataService: DataService,
-    private storage: Storage,
     private headerService: HeaderService,
-    private loaderSerice: LoaderService
+    private loaderSerice: LoaderService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit() {
@@ -38,18 +36,11 @@ export class HomePage implements OnInit {
   }
 
   onAddToFavorites(movie: Movie) {
-    const idx = this.favorites.findIndex((m: Movie) => m.id === movie.id);
-
-    if (idx === -1) {
-      this.favorites.push(movie);
-      this.saveFavorites();
-    }
+    this.storageService.add(movie);
   }
 
   onRemoveFromFavorites(id: number) {
-    const idx = this.favorites.findIndex((movie: Movie) => movie.id === id);
-    this.favorites.splice(idx, 1);
-    this.saveFavorites();
+    this.storageService.remove(id);
   }
 
   onLoadMore(event: IonInfiniteScrollCustomEvent) {
@@ -60,24 +51,16 @@ export class HomePage implements OnInit {
     });
   }
 
+  isExists(id: number) {
+    return this.storageService.checkExisting(id);
+  }
+
   private initPage(loader: any) {
     loader.present();
 
     this.headerService.dispatch('Popular');
 
-    Promise.resolve()
-      .then(this.initializeStorage.bind(this))
-      .then(this.getMovies.bind(this, () => loader.dismiss()));
-  }
-
-  private initializeStorage() {
-    this.storage.get('genre').then(val => {
-      val ? this.genre = val : this.storage.set('genre', { id: 5, name: 'Genre' });
-    });
-
-    this.storage.get('favorites').then(val => {
-      val ? this.favorites = val : this.saveFavorites();
-    });
+    Promise.resolve().then(this.getMovies.bind(this, () => loader.dismiss()));
   }
 
   private getMovies(callback?: () => void) {
@@ -90,9 +73,5 @@ export class HomePage implements OnInit {
 
         if (callback) { callback(); }
       });
-  }
-
-  private saveFavorites() {
-    this.storage.set('favorites', this.favorites);
   }
 }

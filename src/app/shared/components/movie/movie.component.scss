@@ -31,6 +31,10 @@ ion-card {
     right: 10px;
   }
 
+  ion-img {
+    max-width: 100%;
+  }
+
   .image-wrapper::after {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100%);
     content: '';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage';
 
 import { Movie } from '../shared/models';
+import { StorageService } from '../core/services';
 
 @Component({
   selector: 'app-favorites',
@@ -9,38 +9,25 @@ import { Movie } from '../shared/models';
   styleUrls: ['./favorites.page.scss'],
 })
 export class FavoritesPage implements OnInit {
-  favorites = [];
+  favorites: Movie[] = [];
 
-  constructor(private storage: Storage) { }
+  constructor(private storageService: StorageService) { }
 
   ngOnInit() {
     this.getFavorites();
   }
 
-  onAddToFavorites(movie: Movie) {
-    const idx = this.favorites.findIndex((m: Movie) => m.id === movie.id);
-
-    if (idx === -1) {
-      this.favorites.push(movie);
-      this.saveFavorites();
-    }
+  onRemoveFromFavorites(id: number) {
+    this.storageService.remove(id).then(this.getFavorites.bind(this));
   }
 
-  onRemoveFromFavorites(id: number) {
-    const idx = this.favorites.findIndex((movie: Movie) => movie.id === id);
-    this.favorites.splice(idx, 1);
-    this.saveFavorites();
+  isExists(id: number) {
+    return this.storageService.checkExisting(id);
   }
 
   private getFavorites() {
-    this.storage.get('favorites').then((movies: Movie[]) => {
-      if (movies && movies.length) {
-        this.favorites = movies;
-      }
+    this.storageService.getFavorites().then((data?: Movie[]) => {
+      data && data.length ? this.favorites = [...data] : this.favorites.length = 0;
     });
-  }
-
-  private saveFavorites() {
-    this.storage.set('favorites', this.favorites);
   }
 }

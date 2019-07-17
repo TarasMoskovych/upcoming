@@ -7,7 +7,7 @@
       <img src="assets/img/blank.png" alt="Image">
     </ng-template>
   </div>
-  <ng-container *ngIf="!checkInFavorites(movie.id); else remove">
+  <ng-container *ngIf="!isExists; else remove">
     <ion-button fill="outline" size="small" (click)="onAddToFavorites(movie)">
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
