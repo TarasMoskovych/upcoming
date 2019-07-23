@@ -1,11 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { map, delay } from 'rxjs/operators';
 
 import { origin } from './../configs';
 import { CoreModule } from './../core.module';
 
-import { Movies } from 'src/app/shared/models';
+import { Movies, Genre, Genres } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: CoreModule
@@ -35,5 +36,18 @@ export class DataService {
         }
       })
     }).pipe(delay(800), map((data: Movies) => data.results));
+  }
+
+  getGenres(): Observable<Genre[]> {
+    return this.http.get(`${this.baseUrl}/genre/movie/list`)
+      .pipe(map((data: Genres) => data.genres));
+  }
+
+  getByParams(page: string = '1', options: any) {
+    return this.http.get(`${this.baseUrl}/discover/movie`, {
+      params: new HttpParams({
+        fromObject: Object.assign(options, { page })
+      })
+    }).pipe(map((data: Movies) => data.results));
   }
 }

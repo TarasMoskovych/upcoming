@@ -13,16 +13,19 @@ import { TokenInterceptor } from './core/interceptors';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
+import { GenresPage } from './genres/genres.page';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, GenresPage],
+  entryComponents: [GenresPage],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     HttpClientModule,
     CoreModule,
+    SharedModule,
     AppRoutingModule
   ],
   providers: [
