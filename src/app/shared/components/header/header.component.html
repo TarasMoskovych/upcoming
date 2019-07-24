@@ -11,10 +11,15 @@
       </ng-container>
     </ion-buttons>
     <ng-container *ngIf="!genresPage; else genresTitle">
-      <ion-title routerLink="/home">
-        <div class="title-wrapper">
+      <ion-title>
+        <div class="title-wrapper" routerLink="/home">
           <img class="logo" src="assets/img/logo.png" alt="Logo">
-          {{ title$ | async }}
+          <ng-container *ngIf="title$ | async as title; else title">
+            {{ title }}
+          </ng-container>
+          <ng-template #title>
+            Favorites
+          </ng-template>
         </div>
       </ion-title>
     </ng-container>

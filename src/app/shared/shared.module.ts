@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { HeaderComponent, MovieComponent, ViewMoreComponent } from './components';
+import { HeaderComponent, LoaderComponent, MovieComponent, ViewMoreComponent } from './components';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     HeaderComponent,
+    LoaderComponent,
     MovieComponent,
     ViewMoreComponent
   ],
@@ -20,6 +21,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     HeaderComponent,
+    LoaderComponent,
     MovieComponent,
     ViewMoreComponent,
     FormsModule,

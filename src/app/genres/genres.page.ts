@@ -12,9 +12,9 @@ import { HeaderService } from './../core/services';
 export class GenresPage implements OnDestroy {
   constructor(private headerService: HeaderService) { }
 
-  @Input() genres: Genre[];
+  @Input() genres: Genre[] = [];
 
   ngOnDestroy() {
-    this.headerService.dispatchGenres(this.genres.filter((genre: Genre) => genre.checked));
+    this.headerService.dispatchApplyChanges(this.genres.filter((genre: Genre) => genre.checked));
   }
 }

@@ -4,6 +4,7 @@
 ></app-header>
 
 <ion-content>
+  <app-loader *ngIf="loading"></app-loader>
   <ng-container *ngIf="movies.length > 0">
     <app-movie
       *ngFor="let movie of movies"
@@ -13,5 +14,10 @@
       (removeFromFavorites)="onRemoveFromFavorites($event)"
     ></app-movie>
   </ng-container>
-  <app-view-more (viewMore)="onLoadMore($event)"></app-view-more>
+  <app-view-more *ngIf="!noResults" (viewMore)="onLoadMore($event)"></app-view-more>
+  <ng-container *ngIf="noResults && !loading">
+    <ion-text color="primary">
+      <p>No results found!</p>
+    </ion-text>
+  </ng-container>
 </ion-content>

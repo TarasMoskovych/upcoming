@@ -12,8 +12,9 @@ import { GenresPage } from './../genres/genres.page';
 })
 export class HomePage implements OnInit {
   movies: Movie[] = [];
+  loading = false;
+  noResults = false;
   isGetByGenres = false;
-  genre = { id: 1, name: 'Popular' };
   isPopular = true;
   page = 1;
   ids = [];
@@ -28,16 +29,11 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.loaderSerice.showLoader().then(this.initPage.bind(this));
-
-    this.headerService.applyChanges$.subscribe((genres: Genre[]) => {
-      genres.forEach((genre: Genre) => this.ids.push(genre.id));
-
-      this.clearMovies(true);
-      this.getByGenres();
-    });
+    this.getGenres();
   }
 
   onTogglePopular(isPopular: boolean) {
+    this.loading = true;
     this.clearMovies(false);
     this.isPopular = isPopular;
     this.getMovies();
@@ -58,13 +54,13 @@ export class HomePage implements OnInit {
     this.dataService.getGenres().subscribe(async (genres: Genre[]) => {
       genres.forEach(genre => genre.checked = false);
 
-      this.modalService.create({
+      this.modalService.create('genres', {
         component: GenresPage,
         componentProps: {
           genres
         }
       }).then(() => {
-        this.modalService.present();
+        this.modalService.present('genres');
       });
     });
   }
@@ -73,7 +69,7 @@ export class HomePage implements OnInit {
     this.page++;
 
     const cb = () => event.target.complete();
-    this.isGetByGenres ? this.getByGenres(cb) : this.getMovies(cb);
+    this.isGetByGenres ? this.getMoviesByGenres(cb) : this.getMovies(cb);
   }
 
   isExists(id: number) {
@@ -95,15 +91,29 @@ export class HomePage implements OnInit {
     sub$.pipe(take(1))
       .subscribe((data: Movie[]) => {
         this.movies = this.movies.concat(data);
+        this.loading = false;
+        this.noResults = this.movies.length === 0;
 
         if (callback) { callback(); }
       });
   }
 
-  private getByGenres(callback?: () => void) {
+  private getGenres() {
+    this.headerService.applyChanges$.subscribe((genres: Genre[]) => {
+      genres.forEach((genre: Genre) => this.ids.push(genre.id));
+
+      this.clearMovies(true);
+      this.getMoviesByGenres();
+    });
+  }
+
+  private getMoviesByGenres(callback?: () => void) {
+    this.loading = true;
     this.dataService.getByParams(this.page.toString(), { with_genres: this.ids.join() })
       .subscribe((data: Movie[]) => {
         this.movies = this.movies.concat(data);
+        this.loading = false;
+        this.noResults = this.movies.length === 0;
 
         if (callback) { callback(); }
     });

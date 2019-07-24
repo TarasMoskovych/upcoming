@@ -7,25 +7,25 @@ import { CoreModule } from '../core.module';
   providedIn: CoreModule
 })
 export class ModalService {
-  modal = null;
+  modals = {};
 
   constructor(public modalController: ModalController) { }
 
-  async create(options: any) {
+  async create(key: string, options: any) {
     const modal = await this.modalController.create({
       component: options.component,
       componentProps: options.componentProps
     });
 
-    this.modal = modal;
-    return await this.modal;
+    this.modals[key] = modal;
+    return await this.modals[key];
   }
 
-  async present() {
-    return await this.modal.present();
+  async present(key: string) {
+    return await this.modals[key].present();
   }
 
-  async dismiss() {
-    return await this.modal.dismiss();
+  async dismiss(key: string) {
+    return await this.modals[key].dismiss();
   }
 }

@@ -15,6 +15,11 @@ ion-header {
 
   .title-wrapper {
     font-weight: normal;
-    top: -5px;
+    outline: none;
+    top: -3px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

@@ -1,8 +1,6 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 import { HeaderService, ModalService } from 'src/app/core/services';
-import { Genre } from 'src/app/shared/models';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -31,14 +29,14 @@ export class HeaderComponent {
   }
 
   onGoBack() {
-    this.modalService.dismiss();
+    this.closeGenresModal();
   }
 
   onApplyGenres() {
-    this.modalService.dismiss();
+    this.closeGenresModal();
+  }
 
-    this.headerService.genres$.pipe(first()).subscribe((genres: Genre[]) => {
-      this.headerService.dispatchApplyChanges(genres);
-    });
+  private closeGenresModal() {
+    this.modalService.dismiss('genres');
   }
 }
