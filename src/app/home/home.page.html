@@ -6,13 +6,15 @@
 <ion-content>
   <app-loader *ngIf="loading"></app-loader>
   <ng-container *ngIf="movies.length > 0">
-    <app-movie
-      *ngFor="let movie of movies"
-      [movie]="movie"
-      [isExists]="isExists(movie.id)"
-      (addToFavorites)="onAddToFavorites($event)"
-      (removeFromFavorites)="onRemoveFromFavorites($event)"
-    ></app-movie>
+    <ion-virtual-scroll [items]="movies" approxItemHeight="200px">
+      <app-movie
+        *virtualItem="let movie"
+        [movie]="movie"
+        [isExists]="isExists(movie.id)"
+        (addToFavorites)="onAddToFavorites($event)"
+        (removeFromFavorites)="onRemoveFromFavorites($event)"
+      ></app-movie>
+    </ion-virtual-scroll>
   </ng-container>
   <app-view-more *ngIf="!noResults" (viewMore)="onLoadMore($event)"></app-view-more>
   <ng-container *ngIf="noResults && !loading">
