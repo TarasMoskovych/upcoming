@@ -2,7 +2,7 @@
 
 <ion-content>
   <ng-container *ngIf="favorites.length > 0; else empty">
-    <ion-virtual-scroll [items]="favorites" approxItemHeight="200px">
+    <ion-virtual-scroll [items]="favorites" approxItemHeight="180px" [itemHeight]="itemHeightFn">
       <app-movie
         *virtualItem="let movie"
         [movie]="movie"

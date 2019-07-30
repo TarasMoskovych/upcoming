@@ -1,10 +1,10 @@
 <ion-card (click)="onViewMore(movie.id)">
   <div class="image-wrapper">
     <ng-container *ngIf="movie.backdrop_path; else noscreen">
-      <img [src]="'https://image.tmdb.org/t/p/w780/' + movie.backdrop_path" alt="Image">
+      <ion-img [src]="'https://image.tmdb.org/t/p/w780/' + movie.backdrop_path" alt="Image"></ion-img>
     </ng-container>
     <ng-template #noscreen>
-      <img src="assets/img/blank.png" alt="Image">
+      <ion-img src="assets/img/blank.png" alt="Image"></ion-img>
     </ng-template>
   </div>
   <ng-container *ngIf="!isExists; else remove">

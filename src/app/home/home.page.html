@@ -7,7 +7,7 @@
 <ion-content>
   <app-loader *ngIf="loading"></app-loader>
   <ng-container *ngIf="movies.length > 0">
-    <ion-virtual-scroll [items]="movies" approxItemHeight="200px">
+    <ion-virtual-scroll [items]="movies" approxItemHeight="180px" [itemHeight]="itemHeightFn">
       <app-movie
         *virtualItem="let movie"
         [movie]="movie"

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonVirtualScroll } from '@ionic/angular';
 import { take } from 'rxjs/operators';
 
 import { DataService, LoaderService, HeaderService, StorageService, ModalService } from './../core/services';
@@ -11,6 +12,8 @@ import { GenresPage } from './../genres/genres.page';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+
   movies: Movie[] = [];
   loading = false;
   noResults = false;
@@ -73,6 +76,10 @@ export class HomePage implements OnInit {
     this.query = query;
     this.clearMovies();
     this.getMoviesByQuery();
+  }
+
+  itemHeightFn() {
+    return 180;
   }
 
   onLoadMore(event: IonInfiniteScrollCustomEvent) {
@@ -143,7 +150,12 @@ export class HomePage implements OnInit {
   }
 
   private onLoadDone(data: Movie[], callback?: () => void) {
-    this.movies = this.movies.concat(data);
+    data.forEach((movie: Movie) => this.movies.push(movie));
+
+    if (this.virtualScroll) {
+      this.virtualScroll.checkEnd();
+    }
+
     this.loading = false;
     this.noResults = this.movies.length === 0;
 

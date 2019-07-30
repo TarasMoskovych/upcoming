@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicStorageModule } from '@ionic/storage';
@@ -31,6 +32,7 @@ import { GenresPage } from './genres/genres.page';
     AppRoutingModule
   ],
   providers: [
+    Keyboard,
     StatusBar,
     SplashScreen,
     {

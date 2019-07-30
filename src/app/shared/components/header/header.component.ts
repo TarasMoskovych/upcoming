@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { HeaderService, ModalService } from 'src/app/core/services';
 import { slideLeft } from '../../animations';
@@ -20,7 +20,7 @@ export class HeaderComponent {
   showSearchBar = false;
   title$ = this.headerService.channel$;
 
-  constructor(private headerService: HeaderService, private modalService: ModalService) { }
+  constructor(private headerService: HeaderService, private modalService: ModalService, private keyboard: Keyboard) { }
 
   onOpenGenres() {
     this.openGenres.emit(true);
@@ -45,6 +45,7 @@ export class HeaderComponent {
 
   onSearch(value: string) {
     this.searchItems.emit(value);
+    this.keyboard.hide();
   }
 
   private closeGenresModal() {

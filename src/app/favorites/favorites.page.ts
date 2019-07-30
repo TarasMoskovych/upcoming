@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { IonVirtualScroll } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Movie } from '../shared/models';
 import { StorageService } from '../core/services';
@@ -9,6 +10,8 @@ import { StorageService } from '../core/services';
   styleUrls: ['./favorites.page.scss'],
 })
 export class FavoritesPage implements OnInit {
+  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+
   favorites: Movie[] = [];
 
   constructor(private storageService: StorageService) { }
@@ -18,11 +21,21 @@ export class FavoritesPage implements OnInit {
   }
 
   onRemoveFromFavorites(id: number) {
-    this.storageService.remove(id).then(this.getFavorites.bind(this));
+    this.storageService.remove(id).then(() => {
+      this.getFavorites();
+
+      if (this.virtualScroll) {
+        this.virtualScroll.checkEnd();
+      }
+    });
   }
 
   isExists(id: number) {
     return this.storageService.checkExisting(id);
+  }
+
+  itemHeightFn() {
+    return 180;
   }
 
   private getFavorites() {
