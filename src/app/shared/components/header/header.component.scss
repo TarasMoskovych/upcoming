@@ -3,6 +3,20 @@ ion-header {
     height: 20px;
   }
 
+  ion-searchbar {
+    position: absolute;
+    top: 4px;
+    z-index: 2;
+
+    &.ios {
+      top: -9px;
+    }
+  }
+
+  ion-toolbar.ios {
+    padding-bottom: 5px;
+  }
+
   .logo,
   .title-wrapper {
     position: relative;

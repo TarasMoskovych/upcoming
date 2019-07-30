@@ -1,49 +1,62 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="secondary">
-      <ng-container *ngIf="!genresPage">
-        <ion-button size="small" routerLink="/favorites">
-          <ion-icon slot="icon-only" name="star"></ion-icon>
-        </ion-button>
-        <ion-button size="small" (click)="onOpenGenres()">
-          <ion-icon slot="icon-only" name="funnel"></ion-icon>
-        </ion-button>
-      </ng-container>
-    </ion-buttons>
-    <ng-container *ngIf="!genresPage; else genresTitle">
-      <ion-title>
-        <div class="title-wrapper" routerLink="/home">
-          <img class="logo" src="assets/img/logo.png" alt="Logo">
-          <ng-container *ngIf="title$ | async as title; else title">
-            {{ title }}
-          </ng-container>
-          <ng-template #title>
-            Favorites
-          </ng-template>
-        </div>
-      </ion-title>
-    </ng-container>
-    <ng-template #genresTitle>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/" (click)="onGoBack()"></ion-back-button>
+
+    <ion-searchbar
+      *ngIf="showSearchBar"
+      animated
+      color="light"
+      showCancelButton="always"
+      [@slide-left]
+      (search)="onSearch($event.target.value)"
+      (ionCancel)="onToggleSearchBar()"
+    ></ion-searchbar>
+
+    <ng-container *ngIf="!showSearchBar">
+      <ion-buttons slot="secondary">
+        <ng-container *ngIf="!genresPage">
+          <ion-button size="small" routerLink="/favorites">
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+          <ion-button size="small" (click)="onOpenGenres()">
+            <ion-icon slot="icon-only" name="funnel"></ion-icon>
+          </ion-button>
+        </ng-container>
       </ion-buttons>
-      <ion-title>Select genres</ion-title>
+      <ng-container *ngIf="!genresPage; else genresTitle">
+        <ion-title>
+          <div class="title-wrapper" routerLink="/home">
+            <img class="logo" src="assets/img/logo.png" alt="Logo">
+            <ng-container *ngIf="title$ | async as title; else title">
+              {{ title }}
+            </ng-container>
+            <ng-template #title>
+              Favorites
+            </ng-template>
+          </div>
+        </ion-title>
+      </ng-container>
+      <ng-template #genresTitle>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/" (click)="onGoBack()"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Select genres</ion-title>
+        <ion-buttons slot="primary">
+          <ion-button size="small" (click)="onApplyGenres()">
+            <ion-icon slot="icon-only" name="checkmark"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ng-template>
       <ion-buttons slot="primary">
-        <ion-button size="small" (click)="onApplyGenres()">
-          <ion-icon slot="icon-only" name="checkmark"></ion-icon>
-        </ion-button>
+        <ng-container *ngIf="!genresPage">
+          <ion-button size="small" (click)="onToggle()">
+            <ion-icon *ngIf="isPopular" name="arrow-up"></ion-icon>
+            <ion-icon *ngIf="!isPopular" name="arrow-down"></ion-icon>
+          </ion-button>
+          <ion-button size="small" (click)="onToggleSearchBar()">
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ng-container>
       </ion-buttons>
-    </ng-template>
-    <ion-buttons slot="primary">
-      <ng-container *ngIf="!genresPage">
-        <ion-button size="small" (click)="onToggle()">
-          <ion-icon *ngIf="isPopular" name="arrow-up"></ion-icon>
-          <ion-icon *ngIf="!isPopular" name="arrow-down"></ion-icon>
-        </ion-button>
-        <ion-button size="small" (click)="openSearchBar()">
-          <ion-icon slot="icon-only" name="search"></ion-icon>
-        </ion-button>
-      </ng-container>
-    </ion-buttons>
+    </ng-container>
   </ion-toolbar>
 </ion-header>

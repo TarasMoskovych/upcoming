@@ -65,6 +65,10 @@ export class HomePage implements OnInit {
     });
   }
 
+  onSearch(value: string) {
+    console.log(value);
+  }
+
   onLoadMore(event: IonInfiniteScrollCustomEvent) {
     this.page++;
 
