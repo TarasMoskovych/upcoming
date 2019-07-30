@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ElementRef } from '@angular/core';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { HeaderService, ModalService } from 'src/app/core/services';
@@ -12,6 +12,7 @@ import { slideLeft } from '../../animations';
 })
 export class HeaderComponent {
   @Input() genresPage = false;
+  @Input() scrollArea: ElementRef;
   @Output() togglePopular = new EventEmitter<boolean>();
   @Output() openGenres = new EventEmitter<boolean>();
   @Output() searchItems = new EventEmitter<string>();

@@ -2,9 +2,10 @@
   (openGenres)="onOpenGenres()"
   (togglePopular)="onTogglePopular($event)"
   (searchItems)="onSearch($event)"
+  [scrollArea]="scrollArea"
 ></app-header>
 
-<ion-content>
+<ion-content #scrollArea scrollEvents="true">
   <app-loader *ngIf="loading"></app-loader>
   <ng-container *ngIf="movies.length > 0">
     <ion-virtual-scroll [items]="movies" approxItemHeight="180px" [itemHeight]="itemHeightFn">
