@@ -14,10 +14,12 @@ export class HomePage implements OnInit {
   movies: Movie[] = [];
   loading = false;
   noResults = false;
+  isGetByQuery = false;
   isGetByGenres = false;
   isPopular = true;
   page = 1;
   ids = [];
+  query = null;
 
   constructor(
     private dataService: DataService,
@@ -34,10 +36,12 @@ export class HomePage implements OnInit {
 
   onTogglePopular(isPopular: boolean) {
     this.loading = true;
-    this.clearMovies(false);
+    this.clearMovies();
     this.isPopular = isPopular;
-    this.getMovies();
+    this.isGetByGenres = false;
+    this.isGetByQuery = false;
 
+    this.getMovies();
     this.headerService.dispatch(this.isPopular ? 'Popular' : 'Upcoming');
   }
 
@@ -65,15 +69,24 @@ export class HomePage implements OnInit {
     });
   }
 
-  onSearch(value: string) {
-    console.log(value);
+  onSearch(query: string) {
+    this.query = query;
+    this.clearMovies();
+    this.getMoviesByQuery();
   }
 
   onLoadMore(event: IonInfiniteScrollCustomEvent) {
     this.page++;
 
     const cb = () => event.target.complete();
-    this.isGetByGenres ? this.getMoviesByGenres(cb) : this.getMovies(cb);
+
+    if (this.isGetByGenres) {
+      this.getMoviesByGenres(cb)
+    } else if (this.isGetByQuery) {
+      this.getMoviesByQuery(cb);
+    } else {
+      this.getMovies(cb);
+    }
   }
 
   isExists(id: number) {
@@ -88,43 +101,56 @@ export class HomePage implements OnInit {
     Promise.resolve().then(this.getMovies.bind(this, () => loader.dismiss()));
   }
 
+  private getGenres() {
+    this.headerService.applyChanges$.subscribe((genres: Genre[]) => {
+      genres.forEach((genre: Genre) => this.ids.push(genre.id));
+
+      this.clearMovies();
+      this.getMoviesByGenres();
+    });
+  }
+
   private getMovies(callback?: () => void) {
     const page = this.page.toString();
     const sub$ = this.isPopular ? this.dataService.getPopular(page) : this.dataService.getUpcoming(page);
 
     sub$.pipe(take(1))
       .subscribe((data: Movie[]) => {
-        this.movies = this.movies.concat(data);
-        this.loading = false;
-        this.noResults = this.movies.length === 0;
-
-        if (callback) { callback(); }
+        this.onLoadDone(data, callback);
       });
   }
 
-  private getGenres() {
-    this.headerService.applyChanges$.subscribe((genres: Genre[]) => {
-      genres.forEach((genre: Genre) => this.ids.push(genre.id));
-
-      this.clearMovies(true);
-      this.getMoviesByGenres();
-    });
-  }
-
   private getMoviesByGenres(callback?: () => void) {
+    this.isGetByGenres = true;
+    this.isGetByQuery = false;
     this.loading = true;
+
     this.dataService.getByParams(this.page.toString(), { with_genres: this.ids.join() })
       .subscribe((data: Movie[]) => {
-        this.movies = this.movies.concat(data);
-        this.loading = false;
-        this.noResults = this.movies.length === 0;
-
-        if (callback) { callback(); }
+        this.onLoadDone(data, callback);
     });
   }
 
-  private clearMovies(isGetByGenres: boolean) {
-    this.isGetByGenres = isGetByGenres;
+  private getMoviesByQuery(callback?: () => void) {
+    this.isGetByQuery = true;
+    this.isGetByGenres = false;
+    this.loading = true;
+
+    this.dataService.getByQuery(this.page.toString(), { query: this.query })
+      .subscribe((data: Movie[]) => {
+        this.onLoadDone(data, callback);
+    });
+  }
+
+  private onLoadDone(data: Movie[], callback?: () => void) {
+    this.movies = this.movies.concat(data);
+    this.loading = false;
+    this.noResults = this.movies.length === 0;
+
+    if (callback) { callback(); }
+  }
+
+  private clearMovies() {
     this.movies.length = 0;
     this.page = 1;
   }

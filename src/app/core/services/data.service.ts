@@ -50,4 +50,12 @@ export class DataService {
       })
     }).pipe(map((data: Movies) => data.results));
   }
+
+  getByQuery(page: string = '1', options: any) {
+    return this.http.get(`${this.baseUrl}/search/movie`, {
+      params: new HttpParams({
+        fromObject: Object.assign(options, { page })
+      })
+    }).pipe(map((data: Movies) => data.results));
+  }
 }
