@@ -1,4 +1,8 @@
-<app-header></app-header>
+<app-header
+  (searchItems)="onSearch($event)"
+  (change)="onChange($event)"
+  (clear)="onClear()"
+></app-header>
 
 <ion-content>
   <ng-container *ngIf="favorites.length > 0; else empty">

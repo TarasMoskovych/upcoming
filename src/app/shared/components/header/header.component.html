@@ -3,12 +3,15 @@
 
     <ion-searchbar
       *ngIf="showSearchBar"
+      #searchBar
       animated
       color="light"
       showCancelButton="always"
       [@slide-left]
+      (@slide-left.done)="onToggleSearchBarDone()"
       (search)="onSearch($event.target.value)"
-      (ionCancel)="onToggleSearchBar()"
+      (ionChange)="onChange($event.target.value)"
+      (ionCancel)="onCancel()"
     ></ion-searchbar>
 
     <ng-container *ngIf="!showSearchBar">

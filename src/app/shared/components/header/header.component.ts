@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter, Input, ElementRef } from '@angular/core';
+import { Component, Output, EventEmitter, Input, ElementRef, ViewChild } from '@angular/core';
+import { IonSearchbar } from '@ionic/angular';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { HeaderService, ModalService } from 'src/app/core/services';
@@ -16,6 +17,9 @@ export class HeaderComponent {
   @Output() togglePopular = new EventEmitter<boolean>();
   @Output() openGenres = new EventEmitter<boolean>();
   @Output() searchItems = new EventEmitter<string>();
+  @Output() clear = new EventEmitter<boolean>();
+  @Output() change = new EventEmitter<string>();
+  @ViewChild('searchBar') searchBar: IonSearchbar;
 
   isPopular = true;
   showSearchBar = false;
@@ -31,6 +35,12 @@ export class HeaderComponent {
     this.showSearchBar = !this.showSearchBar;
   }
 
+  onToggleSearchBarDone() {
+    if (this.showSearchBar && this.searchBar) {
+      this.searchBar.setFocus();
+    }
+  }
+
   onToggle() {
     this.isPopular = !this.isPopular;
     this.togglePopular.emit(this.isPopular);
@@ -38,6 +48,7 @@ export class HeaderComponent {
 
   onGoBack() {
     this.closeGenresModal();
+    this.keyboard.hide();
   }
 
   onApplyGenres() {
@@ -47,6 +58,15 @@ export class HeaderComponent {
   onSearch(value: string) {
     this.searchItems.emit(value);
     this.keyboard.hide();
+  }
+
+  onChange(value: string) {
+    this.change.emit(value);
+  }
+
+  onCancel() {
+    this.onToggleSearchBar();
+    this.clear.emit(true);
   }
 
   private closeGenresModal() {
