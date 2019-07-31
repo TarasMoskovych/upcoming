@@ -6,7 +6,7 @@ import { map, delay } from 'rxjs/operators';
 import { origin } from './../configs';
 import { CoreModule } from './../core.module';
 
-import { Movies, Genre, Genres } from 'src/app/shared/models';
+import { Movies, MovieDetails, Genre, Genres } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: CoreModule
@@ -57,5 +57,9 @@ export class DataService {
         fromObject: Object.assign(options, { page })
       })
     }).pipe(map((data: Movies) => data.results));
+  }
+
+  getById(id: number) {
+    return this.http.get<MovieDetails>(`${this.baseUrl}/movie/${id}`);
   }
 }

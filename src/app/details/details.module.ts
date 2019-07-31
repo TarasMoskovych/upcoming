@@ -4,23 +4,23 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { GenresPage } from './genres.page';
+import { DetailsPage } from './details.page';
 import { SharedModule } from './../shared/shared.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: GenresPage
+    component: DetailsPage
   }
 ];
 
 @NgModule({
   imports: [
-    SharedModule,
     CommonModule,
     IonicModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: []
+  declarations: [DetailsPage]
 })
-export class GenresPageModule {}
+export class DetailsPageModule {}
