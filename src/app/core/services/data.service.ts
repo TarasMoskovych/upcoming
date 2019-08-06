@@ -6,7 +6,7 @@ import { map, delay } from 'rxjs/operators';
 import { origin } from './../configs';
 import { CoreModule } from './../core.module';
 
-import { Movies, MovieDetails, Genre, Genres } from 'src/app/shared/models';
+import { Movies, MovieDetails, Genre, Genres, Images, Videos } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: CoreModule
@@ -61,5 +61,15 @@ export class DataService {
 
   getById(id: number) {
     return this.http.get<MovieDetails>(`${this.baseUrl}/movie/${id}`);
+  }
+
+  getImages(id: number) {
+    return this.http.get(`${this.baseUrl}/movie/${id}/images`)
+      .pipe(map((images: Images) => images.backdrops));
+  }
+
+  getVideos(id: number) {
+    return this.http.get(`${this.baseUrl}/movie/${id}/videos`)
+      .pipe(map((videos: Videos) => videos.results));
   }
 }
