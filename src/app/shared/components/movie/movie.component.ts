@@ -10,17 +10,21 @@ import { Movie } from 'src/app/shared/models';
 })
 export class MovieComponent {
   @Input() movie: Movie;
-  @Input() isExists: boolean = false;
+  @Input() isExists = false;
   @Output() addToFavorites = new EventEmitter<Movie>();
   @Output() removeFromFavorites = new EventEmitter<number>();
 
   onViewMore(id: any) {}
 
-  onAddToFavorites(movie: Movie) {
+  onAddToFavorites(e: MouseEvent, movie: Movie) {
+    e.preventDefault();
+    e.stopPropagation();
     this.addToFavorites.emit(movie);
   }
 
-  onRemoveFromFavorites(id: number) {
+  onRemoveFromFavorites(e: MouseEvent, id: number) {
+    e.preventDefault();
+    e.stopPropagation();
     this.removeFromFavorites.emit(id);
   }
 }

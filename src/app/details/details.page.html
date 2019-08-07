@@ -2,63 +2,58 @@
 
 <ion-content>
   <ng-container *ngIf="movie">
-    <div class="movie-img">
-      <ion-img [src]="'https://image.tmdb.org/t/p/w780/' + movie.poster_path" [alt]="movie.title"></ion-img>
-    </div>
+    <ion-img class="poster" [src]="'https://image.tmdb.org/t/p/w780/' + movie.poster_path" [alt]="movie.title"></ion-img>
 
-    <div>
+    <ion-card class="card-details">
       <ion-grid>
         <ion-row>
           <ion-col col-6>
-            <h4>Rating</h4>
-            <p>{{ movie.vote_average | number: '1.1-1' }}</p>
+            <h4 class="heading4">Rating</h4>
+            <p class="large-text">{{ movie.vote_average | number: '1.1-1' }}</p>
           </ion-col>
           <ion-col col-6>
-            <h4>Genre</h4>
+            <h4 class="heading4">Genre</h4>
             <p>{{ movie.genres[0].name }}</p>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col col-6>
-            <h4>Website</h4>
+            <h4 class="heading4">Website</h4>
             <ion-button [href]="movie.homepage">Visit</ion-button>
           </ion-col>
           <ion-col col-6>
-            <h4>Release Date</h4>
+            <h4 class="heading4">Release Date</h4>
             <p>{{ movie.release_date | date: 'mediumDate' }}</p>
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
+    </ion-card>
 
     <ion-card padding>
-      <h4>Overview</h4>
+      <h4 class="heading4">Overview</h4>
       <p>{{ movie.overview }}</p>
     </ion-card>
 
     <ng-container *ngIf="images$ | async as images">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-12>
-            <h5>Screenshots</h5>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-slides scrollbar="true">
-        <ion-slide *ngFor="let image of images">
-          <ion-img [src]="'https://image.tmdb.org/t/p/w780/' + image.file_path" alt="Image"></ion-img>
+      <h5 class="heading5">Screenshots</h5>
+      <ion-slides scrollbar="true" (ionSlideWillChange)="onSlideWillChange()">
+        <ion-slide *ngFor="let image of images; let idx=index">
+          <ion-thumbnail slot="start" *ngIf="!isImageLoaded">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-img
+            alt=""
+            class="image-item"
+            (ionImgDidLoad)="onImgDidLoad(idx)"
+            [src]="'https://image.tmdb.org/t/p/w780/' + image.file_path"
+            [class.hidden]="!isImageLoaded"
+          ></ion-img>
         </ion-slide>
       </ion-slides>
     </ng-container>
 
     <ng-container *ngIf="videos$ | async as videos">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-12>
-            <h5>Videos</h5>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <h5 class="heading5 heading5--video">Videos</h5>
       <ion-list>
         <ion-item *ngFor="let video of videos">
           <ion-button slot="start" size="small">

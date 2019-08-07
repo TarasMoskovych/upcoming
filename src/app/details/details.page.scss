@@ -1,0 +1,59 @@
+.heading4 {
+  color: #005691;
+  margin: 0;
+  padding: 0;
+}
+
+.heading5 {
+  color: #004a7c;
+  margin: 25px 0 10px 10px;
+
+  &--video {
+    margin-left: 15px;
+  }
+}
+
+.large-text {
+  font-size: 1.8em;
+  padding: 0;
+  margin: 0;
+}
+
+.poster {
+  height: 500px;
+  object-fit: cover;
+}
+
+.image-item {
+  height: 200px;
+  object-fit: cover;
+  transition: .4s;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+.card-details {
+  background: white;
+  margin: -100px auto 0;
+  padding: 5px;
+  position: relative;
+  width: 95%;
+}
+
+ion-list {
+  padding: 0;
+
+  ion-button {
+    margin-left: 0;
+    margin-right: 10px;
+  }
+}
+
+ion-thumbnail {
+  height: 200px;
+  position: absolute;
+  width: 100%;
+}
+
