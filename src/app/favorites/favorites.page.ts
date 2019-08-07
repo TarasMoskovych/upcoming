@@ -11,7 +11,7 @@ import { StorageService } from '../core/services';
   styleUrls: ['./favorites.page.scss'],
 })
 export class FavoritesPage implements OnInit {
-  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+  @ViewChild(IonVirtualScroll, { static: false }) virtualScroll: IonVirtualScroll;
 
   favorites: Movie[] = [];
   search: Movie[] = [];

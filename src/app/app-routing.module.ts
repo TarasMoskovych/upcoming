@@ -3,10 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-  { path: 'favorites', loadChildren: './favorites/favorites.module#FavoritesPageModule' },
-  { path: 'genres', loadChildren: './genres/genres.module#GenresPageModule' },
-  { path: 'details/:id', loadChildren: './details/details.module#DetailsPageModule' },
+  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
+  { path: 'favorites', loadChildren: () => import('./favorites/favorites.module').then(m => m.FavoritesPageModule) },
+  { path: 'genres', loadChildren: () => import('./genres/genres.module').then(m => m.GenresPageModule) },
+  { path: 'details/:id', loadChildren: () => import('./details/details.module').then(m => m.DetailsPageModule) },
 ];
 
 @NgModule({

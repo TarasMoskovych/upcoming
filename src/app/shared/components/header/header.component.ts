@@ -19,7 +19,7 @@ export class HeaderComponent {
   @Output() searchItems = new EventEmitter<string>();
   @Output() clear = new EventEmitter<boolean>();
   @Output() change = new EventEmitter<string>();
-  @ViewChild('searchBar') searchBar: IonSearchbar;
+  @ViewChild('searchBar', { static: false }) searchBar: IonSearchbar;
 
   isPopular = true;
   showSearchBar = false;

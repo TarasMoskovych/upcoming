@@ -12,7 +12,7 @@ import { GenresPage } from './../genres/genres.page';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+  @ViewChild(IonVirtualScroll, { static: false }) virtualScroll: IonVirtualScroll;
 
   movies: Movie[] = [];
   loading = false;
