@@ -1,11 +1,6 @@
 <ion-card (click)="onViewMore(movie.id)" [routerLink]="['/details', movie.id]">
   <div class="image-wrapper">
-    <ng-container *ngIf="movie.backdrop_path; else noscreen">
-      <ion-img [src]="'https://image.tmdb.org/t/p/w780/' + movie.backdrop_path" alt="Image"></ion-img>
-    </ng-container>
-    <ng-template #noscreen>
-      <ion-img src="assets/img/blank.png" alt="Image"></ion-img>
-    </ng-template>
+    <ion-img [src]="imageService.getUrl(movie.backdrop_path)" alt="Image"></ion-img>
   </div>
   <ng-container *ngIf="!isExists; else remove">
     <ion-button fill="outline" size="small" (click)="onAddToFavorites($event, movie)">

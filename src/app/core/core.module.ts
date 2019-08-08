@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
-import { ApiProvider } from './configs';
+import { ApiProvider, ImageProvider } from './configs';
 
 @NgModule({
   declarations: [],
-  providers: [ApiProvider],
+  providers: [ApiProvider, ImageProvider],
   imports: [
     CommonModule,
     IonicModule

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { Observable } from 'rxjs';
 
-import { DataService } from './../core/services';
+import { DataService, ImageService } from './../core/services';
 import { MovieDetails, Image, Video } from '../shared/models';
 
 @Component({
@@ -25,7 +25,8 @@ export class DetailsPage implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    public imageService: ImageService
   ) { }
 
   ngOnInit() {

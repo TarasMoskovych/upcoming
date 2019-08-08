@@ -1,8 +1,13 @@
 <ng-container *ngIf="movie$ | async as movie; else loader">
-  <app-header [staticTitle]="movie.title"></app-header>
+  <app-header
+    [staticTitle]="movie.title"
+    [showLogo]="false"
+    [showPrimaryButtons]="false"
+    [showSecondaryButtons]="false"
+  ></app-header>
 
   <ion-content>
-    <ion-img class="poster" [src]="'https://image.tmdb.org/t/p/w780/' + movie.poster_path" [alt]="movie.title"></ion-img>
+    <ion-img class="poster" [src]="imageService.getUrl(movie.poster_path)" [alt]="movie.title"></ion-img>
 
     <ion-card class="card-details">
       <ion-grid>
@@ -13,7 +18,7 @@
           </ion-col>
           <ion-col col-6>
             <h4 class="heading4">Genre</h4>
-            <p>{{ movie.genres[0].name }}</p>
+            <p>{{ movie.genres[0]?.name }}</p>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -45,7 +50,7 @@
             alt=""
             class="image-item"
             (ionImgDidLoad)="onImgDidLoad(idx)"
-            [src]="'https://image.tmdb.org/t/p/w780/' + image.file_path"
+            [src]="imageService.getUrl(image.file_path)"
             [class.hidden]="!isImageLoaded"
           ></ion-img>
         </ion-slide>

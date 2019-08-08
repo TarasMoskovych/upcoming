@@ -22,10 +22,14 @@ export class ModalService {
   }
 
   async present(key: string) {
-    return await this.modals[key].present();
+    if (this.modals[key]) {
+      return await this.modals[key].present();
+    }
   }
 
   async dismiss(key: string) {
-    return await this.modals[key].dismiss();
+    if (this.modals[key]) {
+      return await this.modals[key].dismiss();
+    }
   }
 }

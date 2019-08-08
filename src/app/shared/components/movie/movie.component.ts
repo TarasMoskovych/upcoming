@@ -1,6 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 import { Movie } from 'src/app/shared/models';
+import { ImageService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-movie',
@@ -13,6 +14,8 @@ export class MovieComponent {
   @Input() isExists = false;
   @Output() addToFavorites = new EventEmitter<Movie>();
   @Output() removeFromFavorites = new EventEmitter<number>();
+
+  constructor(public imageService: ImageService) { }
 
   onViewMore(id: any) {}
 

@@ -15,7 +15,8 @@ export class HeaderComponent {
   @Input() staticTitle: string;
   @Input() showLogo = true;
   @Input() showApplyButton = false;
-  @Input() genresPage = false;
+  @Input() showPrimaryButtons = true;
+  @Input() showSecondaryButtons = true;
   @Input() scrollArea: ElementRef;
   @Output() togglePopular = new EventEmitter<boolean>();
   @Output() openGenres = new EventEmitter<boolean>();
@@ -28,7 +29,11 @@ export class HeaderComponent {
   showSearchBar = false;
   title$ = this.headerService.channel$;
 
-  constructor(private headerService: HeaderService, private modalService: ModalService, private keyboard: Keyboard) { }
+  constructor(
+    private headerService: HeaderService,
+    private modalService: ModalService,
+    private keyboard: Keyboard
+  ) { }
 
   onOpenGenres() {
     this.openGenres.emit(true);

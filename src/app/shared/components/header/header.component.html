@@ -16,7 +16,7 @@
     <ng-container *ngIf="!showSearchBar">
 
       <ion-buttons slot="secondary">
-        <ng-container *ngIf="!genresPage">
+        <ng-container *ngIf="showSecondaryButtons">
           <ion-button size="small" routerLink="/favorites">
             <ion-icon slot="icon-only" name="star"></ion-icon>
           </ion-button>
@@ -47,7 +47,7 @@
         </div>
       </ion-title>
 
-      <ion-buttons slot="primary">
+      <ion-buttons slot="primary" *ngIf="showPrimaryButtons">
         <ion-button size="small" (click)="onToggle()" *ngIf="!showApplyButton">
           <ion-icon *ngIf="isPopular" name="arrow-up"></ion-icon>
           <ion-icon *ngIf="!isPopular" name="arrow-down"></ion-icon>
