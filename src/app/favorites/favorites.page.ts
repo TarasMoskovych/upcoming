@@ -53,7 +53,7 @@ export class FavoritesPage implements OnInit {
   }
 
   itemHeightFn() {
-    return 180;
+    return 200;
   }
 
   private getFavorites() {

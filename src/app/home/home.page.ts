@@ -79,7 +79,7 @@ export class HomePage implements OnInit {
   }
 
   itemHeightFn() {
-    return 180;
+    return 200;
   }
 
   onLoadMore(event: IonInfiniteScrollCustomEvent) {
