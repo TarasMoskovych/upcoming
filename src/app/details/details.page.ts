@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 import { Observable } from 'rxjs';
 
 import { DataService, ImageService } from './../core/services';
@@ -26,7 +28,9 @@ export class DetailsPage implements OnInit {
   constructor(
     private router: ActivatedRoute,
     private dataService: DataService,
-    public imageService: ImageService
+    private iab: InAppBrowser,
+    public imageService: ImageService,
+    private youtube: YoutubeVideoPlayer
   ) { }
 
   ngOnInit() {
@@ -44,6 +48,14 @@ export class DetailsPage implements OnInit {
   onSlideWillChange() {
     this.isImageLoaded = false;
     this.slides.getActiveIndex().then((idx: number) => this.isImageLoaded = this.loadedImgs.includes(idx));
+  }
+
+  onVisitWebsite(url: string) {
+    this.iab.create(url).close();
+  }
+
+  onVideoPlay(id: string) {
+    this.youtube.openVideo(id);
   }
 
   private getMovie() {
