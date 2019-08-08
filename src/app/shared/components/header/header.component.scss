@@ -30,7 +30,10 @@ ion-header {
   .title-wrapper {
     font-weight: normal;
     outline: none;
-    top: -3px;
+
+    &--with-logo {
+      top: -3px;
+    }
 
     &:hover {
       cursor: pointer;

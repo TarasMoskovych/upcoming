@@ -12,6 +12,9 @@ import { slideLeft } from '../../animations';
   animations: [slideLeft],
 })
 export class HeaderComponent {
+  @Input() staticTitle: string;
+  @Input() showLogo = true;
+  @Input() showApplyButton = false;
   @Input() genresPage = false;
   @Input() scrollArea: ElementRef;
   @Output() togglePopular = new EventEmitter<boolean>();

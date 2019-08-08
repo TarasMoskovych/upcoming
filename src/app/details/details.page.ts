@@ -15,9 +15,9 @@ export class DetailsPage implements OnInit {
   @ViewChild(IonSlides, {  static: false }) slides: IonSlides;
 
   id: number;
-  movie: MovieDetails;
 
   images$: Observable<Image[]>;
+  movie$: Observable<MovieDetails>;
   videos$: Observable<Video[]>;
 
   isImageLoaded = true;
@@ -46,10 +46,7 @@ export class DetailsPage implements OnInit {
   }
 
   private getMovie() {
-    this.dataService.getById(this.id)
-      .subscribe((movie: MovieDetails) => {
-        this.movie = movie;
-      });
+    this.movie$ = this.dataService.getById(this.id);
   }
 
   private getImages() {

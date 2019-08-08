@@ -1,7 +1,7 @@
-<app-header></app-header>
+<ng-container *ngIf="movie$ | async as movie; else loader">
+  <app-header [staticTitle]="movie.title"></app-header>
 
-<ion-content>
-  <ng-container *ngIf="movie">
+  <ion-content>
     <ion-img class="poster" [src]="'https://image.tmdb.org/t/p/w780/' + movie.poster_path" [alt]="movie.title"></ion-img>
 
     <ion-card class="card-details">
@@ -64,5 +64,11 @@
       </ion-list>
     </ng-container>
 
-  </ng-container>
-</ion-content>
+  </ion-content>
+</ng-container>
+
+<ng-template #loader>
+  <ion-content>
+    <app-loader></app-loader>
+  </ion-content>
+</ng-template>
