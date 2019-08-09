@@ -20,23 +20,22 @@
 }
 
 .poster {
-  height: 500px;
-  object-fit: cover;
+  height: 460px;
+
+  ion-img {
+    object-fit: cover;
+    position: absolute;
+  }
 }
 
 .image-item {
   height: 200px;
   object-fit: cover;
-  transition: .4s;
-
-  &.hidden {
-    opacity: 0;
-  }
 }
 
 .card-details {
   background: white;
-  margin: -100px auto 0;
+  margin: -50% auto 15px;
   padding: 5px;
   position: relative;
   width: 95%;
@@ -52,8 +51,25 @@ ion-list {
 }
 
 ion-thumbnail {
-  height: 200px;
   position: absolute;
   width: 100%;
+
+  &.thumbnail {
+    &--poster {
+      height: 460px;
+    }
+
+    &--image-item {
+      height: 200px;
+    }
+  }
+}
+
+ion-img {
+  transition: .4s;
+
+  &.hidden {
+    opacity: 0;
+  }
 }
 

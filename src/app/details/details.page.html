@@ -7,9 +7,20 @@
   ></app-header>
 
   <ion-content>
-    <ion-img class="poster" [src]="imageService.getUrl(movie.poster_path)" [alt]="movie.title"></ion-img>
 
-    <ion-card class="card-details">
+    <div class="poster">
+      <ion-img
+        alt=""
+        [class.hidden]="!isPosterLoaded"
+        [src]="imageService.getUrl(movie.poster_path)"
+        (ionImgDidLoad)="onPosterDidLoad()"
+      ></ion-img>
+      <ion-thumbnail slot="start" *ngIf="!isPosterLoaded" class="thumbnail--poster">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-thumbnail>
+    </div>
+
+    <ion-card class="card-details" [@fadeOut]>
       <ion-grid>
         <ion-row>
           <ion-col col-6>
@@ -34,7 +45,7 @@
       </ion-grid>
     </ion-card>
 
-    <ion-card padding>
+    <ion-card padding [@fadeOut]>
       <h4 class="heading4">Overview</h4>
       <p>{{ movie.overview }}</p>
     </ion-card>
@@ -43,7 +54,7 @@
       <h5 class="heading5">Screenshots</h5>
       <ion-slides scrollbar="true" (ionSlideWillChange)="onSlideWillChange()">
         <ion-slide *ngFor="let image of images; let idx=index">
-          <ion-thumbnail slot="start" *ngIf="!isImageLoaded">
+          <ion-thumbnail slot="start" *ngIf="!isImageLoaded" class="thumbnail--image-item">
             <ion-skeleton-text animated></ion-skeleton-text>
           </ion-thumbnail>
           <ion-img

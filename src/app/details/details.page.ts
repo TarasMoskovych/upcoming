@@ -7,11 +7,13 @@ import { Observable } from 'rxjs';
 
 import { DataService, ImageService } from './../core/services';
 import { MovieDetails, Image, Video } from '../shared/models';
+import { fadeOut } from '../shared/animations';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.page.html',
   styleUrls: ['./details.page.scss'],
+  animations: [fadeOut]
 })
 export class DetailsPage implements OnInit {
   @ViewChild(IonSlides, {  static: false }) slides: IonSlides;
@@ -23,6 +25,7 @@ export class DetailsPage implements OnInit {
   videos$: Observable<Video[]>;
 
   isImageLoaded = true;
+  isPosterLoaded = false;
   loadedImgs: number[] = [];
 
   constructor(
@@ -45,13 +48,17 @@ export class DetailsPage implements OnInit {
     this.isImageLoaded = true;
   }
 
+  onPosterDidLoad() {
+    this.isPosterLoaded = true;
+  }
+
   onSlideWillChange() {
     this.isImageLoaded = false;
     this.slides.getActiveIndex().then((idx: number) => this.isImageLoaded = this.loadedImgs.includes(idx));
   }
 
   onVisitWebsite(url: string) {
-    this.iab.create(url).close();
+    this.iab.create(url, '_system').close();
   }
 
   onVideoPlay(id: string) {
