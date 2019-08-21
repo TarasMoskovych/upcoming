@@ -48,6 +48,10 @@ export class FavoritesPage implements OnInit {
     this.favorites = [...this.search];
   }
 
+  onToggleArrows(sortByTitle: boolean) {
+    this.favorites = [...this.favorites.sort(sortByTitle ? this.sortByTitle : this.sortByAverage)];
+  }
+
   isExists(id: number) {
     return this.storageService.checkExisting(id);
   }
@@ -61,5 +65,13 @@ export class FavoritesPage implements OnInit {
       data && data.length ? this.favorites = [...data] : this.favorites.length = 0;
       this.search = [...this.favorites];
     });
+  }
+
+  private sortByAverage(a: Movie, b: Movie): number {
+    return +b.vote_average - +a.vote_average;
+  }
+
+  private sortByTitle(a: Movie, b: Movie): number {
+    return a.title.localeCompare(b.title);
   }
 }

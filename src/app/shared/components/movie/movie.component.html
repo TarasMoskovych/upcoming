@@ -2,22 +2,30 @@
   <div class="image-wrapper">
     <ion-img [src]="imageService.getUrl(movie.backdrop_path)" alt="Image"></ion-img>
   </div>
-  <ng-container *ngIf="!isExists; else remove">
-    <ion-button fill="outline" size="small" (click)="onAddToFavorites($event, movie)">
-      <ion-icon slot="icon-only" name="star"></ion-icon>
-    </ion-button>
-  </ng-container>
-  <ng-template #remove>
-    <ion-button fill="outline" size="small" (click)="onRemoveFromFavorites($event, movie.id)">
-      <ion-icon slot="icon-only" name="close"></ion-icon>
-    </ion-button>
-  </ng-template>
   <div class="text-wrapper">
-    <ion-card-title>
-      {{ movie.title }}
-    </ion-card-title>
-    <ion-card-subtitle>
-      {{ movie.release_date }}
-    </ion-card-subtitle>
+    <ion-grid>
+      <ion-row class="ion-justify-content-around ion-align-items-center">
+        <ion-col size="9">
+          <ion-card-title>
+            {{ movie.title }}
+          </ion-card-title>
+          <ion-card-subtitle>
+            {{ movie.release_date }}
+          </ion-card-subtitle>
+        </ion-col>
+        <ion-col size="3">
+          <ng-container *ngIf="!isExists; else remove">
+            <ion-button fill="outline" size="small" (click)="onAddToFavorites($event, movie)">
+              <ion-icon slot="icon-only" name="star"></ion-icon>
+            </ion-button>
+          </ng-container>
+          <ng-template #remove>
+            <ion-button fill="outline" size="small" (click)="onRemoveFromFavorites($event, movie.id)">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+          </ng-template>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-card>

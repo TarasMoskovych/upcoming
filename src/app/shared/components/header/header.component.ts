@@ -18,7 +18,7 @@ export class HeaderComponent {
   @Input() showPrimaryButtons = true;
   @Input() showSecondaryButtons = true;
   @Input() scrollArea: ElementRef;
-  @Output() togglePopular = new EventEmitter<boolean>();
+  @Output() toggleArrows = new EventEmitter<boolean>();
   @Output() openGenres = new EventEmitter<boolean>();
   @Output() searchItems = new EventEmitter<string>();
   @Output() clear = new EventEmitter<boolean>();
@@ -51,7 +51,7 @@ export class HeaderComponent {
 
   onToggle() {
     this.isPopular = !this.isPopular;
-    this.togglePopular.emit(this.isPopular);
+    this.toggleArrows.emit(this.isPopular);
   }
 
   onGoBack() {
