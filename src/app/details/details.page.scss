@@ -20,11 +20,13 @@
 }
 
 .poster {
-  height: 460px;
+  height: 430px;
 
   ion-img {
+    height: 430px;
     object-fit: cover;
     position: absolute;
+    width: 100%;
   }
 }
 
@@ -35,7 +37,7 @@
 
 .card-details {
   background: white;
-  margin: -50% auto 15px;
+  margin: -100px auto 15px;
   padding: 5px;
   position: relative;
   width: 95%;

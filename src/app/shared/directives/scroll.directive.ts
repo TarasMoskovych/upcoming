@@ -19,6 +19,7 @@ export class ScrollDirective implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.nativeElement = this.element.nativeElement;
     this.initStyles();
 
     if (!this.scrollArea) { return; }
@@ -30,28 +31,27 @@ export class ScrollDirective implements OnInit {
         this.show();
       } else if (!this.hidden && delta > this.triggerDistance) {
         this.hide();
-      } else if (this.hidden && delta < -this.triggerDistance) {
+      } else if (this.hidden && delta < 0) {
         this.show();
       }
     });
   }
 
   initStyles() {
-    this.nativeElement = this.element.nativeElement;
-
-    this.domCtrl.write(() => {
-      this.renderer.setStyle(this.nativeElement, 'transition', '0.2s linear');
-      this.height = getComputedStyle(this.nativeElement).height;
-    });
+    this.domCtrl.write(() => this.height = getComputedStyle(this.nativeElement).height);
   }
 
   hide() {
-    this.domCtrl.write(() => this.renderer.setStyle(this.nativeElement, 'height', 0));
-    this.hidden = true;
+    this.domCtrl.write(() => {
+      this.renderer.setStyle(this.nativeElement, 'height', 0);
+      this.hidden = true;
+    });
   }
 
   show() {
-    this.domCtrl.write(() => this.renderer.setStyle(this.nativeElement, 'height', this.height));
-    this.hidden = false;
+    this.domCtrl.write(() => {
+      this.renderer.setStyle(this.nativeElement, 'height', this.height);
+      this.hidden = false;
+    });
   }
 }
