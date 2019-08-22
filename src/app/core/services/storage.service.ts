@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 import { CoreModule } from '../core.module';
-import { Movie } from 'src/app/shared/models';
+import { Movie, Genre } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: CoreModule
 })
 export class StorageService {
   private favorites: Movie[] = [];
+  private genres: Genre[] = [];
 
   constructor(private storage: Storage) {
     this.initializeStorage();
@@ -37,10 +38,24 @@ export class StorageService {
     return this.storage.get('favorites');
   }
 
+  getGenres() {
+    return this.storage.get('genres');
+  }
+
+  setGenres(genres: Genre[]) {
+    this.storage.set('genres', genres);
+  }
+
   private initializeStorage() {
     this.storage.get('favorites').then((movies?: Movie[]) => {
       if (movies && movies.length) {
         this.favorites = movies;
+      }
+    });
+
+    this.storage.get('genres').then((genres?: Genre[]) => {
+      if (genres && genres.length) {
+        this.genres = genres;
       }
     });
   }

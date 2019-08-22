@@ -58,17 +58,11 @@ export class HomePage implements OnInit {
 
   onOpenGenres() {
     this.ids.length = 0;
-    this.dataService.getGenres().subscribe(async (genres: Genre[]) => {
-      genres.forEach(genre => genre.checked = false);
 
-      this.modalService.create('genres', {
-        component: GenresPage,
-        componentProps: {
-          genres
-        }
-      }).then(() => {
-        this.modalService.present('genres');
-      });
+    this.modalService.create('genres', {
+      component: GenresPage,
+    }).then(() => {
+      this.modalService.present('genres');
     });
   }
 

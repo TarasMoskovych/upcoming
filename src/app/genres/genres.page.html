@@ -6,7 +6,8 @@
 ></app-header>
 
 <ion-content>
-  <ion-list>
+  <app-loader *ngIf="!loaded"></app-loader>
+  <ion-list *ngIf="loaded">
     <ion-item *ngFor="let genre of genres">
       <ion-label>{{ genre.name }}</ion-label>
       <ion-toggle [(ngModel)]="genre.checked" slot="end"></ion-toggle>
