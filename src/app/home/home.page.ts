@@ -4,6 +4,7 @@ import { take } from 'rxjs/operators';
 
 import { DataService, LoaderService, HeaderService, StorageService, ModalService } from './../core/services';
 import { Movie, Genre, IonInfiniteScrollCustomEvent } from '../shared/models';
+import { ViewMoreComponent } from '../shared/components';
 import { GenresPage } from './../genres/genres.page';
 
 @Component({
@@ -13,6 +14,7 @@ import { GenresPage } from './../genres/genres.page';
 })
 export class HomePage implements OnInit {
   @ViewChild(IonVirtualScroll, { static: false }) virtualScroll: IonVirtualScroll;
+  @ViewChild(ViewMoreComponent, { static: false }) viewMoreComponent: ViewMoreComponent;
 
   movies: Movie[] = [];
   loading = false;
@@ -82,7 +84,7 @@ export class HomePage implements OnInit {
     const cb = () => event.target.complete();
 
     if (this.isGetByGenres) {
-      this.getMoviesByGenres(cb)
+      this.getMoviesByGenres(cb);
     } else if (this.isGetByQuery) {
       this.getMoviesByQuery(cb);
     } else {
@@ -103,19 +105,21 @@ export class HomePage implements OnInit {
   }
 
   private getGenres() {
-    this.headerService.applyChanges$.subscribe((genres: Genre[]) => {
-      genres.forEach((genre: Genre) => this.ids.push(genre.id));
+    this.headerService.applyChanges$
+      .subscribe((genres: Genre[]) => {
+        genres.forEach((genre: Genre) => this.ids.push(genre.id));
 
-      this.clearMovies();
-      this.getMoviesByGenres();
-    });
+        this.clearMovies();
+        this.getMoviesByGenres();
+      });
   }
 
   private getMovies(callback?: () => void) {
     const page = this.page.toString();
     const sub$ = this.isPopular ? this.dataService.getPopular(page) : this.dataService.getUpcoming(page);
 
-    sub$.pipe(take(1))
+    sub$
+      .pipe(take(1))
       .subscribe((data: Movie[]) => {
         this.onLoadDone(data, callback);
       });
@@ -127,6 +131,7 @@ export class HomePage implements OnInit {
     this.loading = true;
 
     this.dataService.getByParams(this.page.toString(), { with_genres: this.ids.join() })
+      .pipe(take(1))
       .subscribe((data: Movie[]) => {
         this.onLoadDone(data, callback);
     });
@@ -138,6 +143,7 @@ export class HomePage implements OnInit {
     this.loading = true;
 
     this.dataService.getByQuery(this.page.toString(), { query: this.query })
+      .pipe(take(1))
       .subscribe((data: Movie[]) => {
         this.onLoadDone(data, callback);
     });
@@ -150,6 +156,10 @@ export class HomePage implements OnInit {
       this.virtualScroll.checkEnd();
     }
 
+    if (data.length === 0) {
+      this.viewMoreComponent.disable();
+    }
+
     this.loading = false;
     this.noResults = this.movies.length === 0;
 
@@ -159,5 +169,9 @@ export class HomePage implements OnInit {
   private clearMovies() {
     this.movies.length = 0;
     this.page = 1;
+
+    if (this.viewMoreComponent) {
+      this.viewMoreComponent.enable();
+    }
   }
 }

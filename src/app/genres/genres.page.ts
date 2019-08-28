@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, OnDestroy, OnInit } from '@angular/
 
 import { Genre } from './../shared/models';
 import { HeaderService, DataService, StorageService } from './../core/services';
-import { first } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-genres',
@@ -32,11 +32,11 @@ export class GenresPage implements OnInit, OnDestroy {
   private getGenres() {
     this.storageService.getGenres().then((genres?: Genre[]) => {
       if (genres && genres.length) {
-        this.genres = genres
+        this.genres = genres;
         this.loaded = true;
       } else {
         this.dataService.getGenres()
-          .pipe(first())
+          .pipe(take(1))
           .subscribe((genres: Genre[]) => {
             this.genres = genres;
             this.loaded = true;
