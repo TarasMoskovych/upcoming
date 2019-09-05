@@ -61,8 +61,9 @@ export class DetailsPage implements OnInit {
     this.iab.create(url, '_system').close();
   }
 
-  onVideoPlay(id: string) {
-    this.youtube.openVideo(id);
+  onVideoPlay(key: string) {
+    // this.youtube.openVideo(key);
+    window.open(`https://www.youtube.com/watch?v=${key}`, '_blank');
   }
 
   private getMovie() {

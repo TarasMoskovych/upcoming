@@ -16,3 +16,13 @@
   --ion-font-family: Raleway, sans-serif;
   font-family: var(--ion-font-family) !important;
 }
+
+body {
+  background: #242A31;
+
+  ion-app {
+    max-height: 730px;
+    max-width: 375px;
+    margin: auto;
+  }
+}
