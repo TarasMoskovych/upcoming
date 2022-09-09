@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -12,8 +13,8 @@ export class TokenInterceptor implements HttpInterceptor {
     if (req.url.includes('themoviedb')) {
       req = req.clone({
         setParams: {
-          api_key: '/** API Key goes here **/'
-        }
+          api_key: environment.api_key,
+        },
       });
     }
 
