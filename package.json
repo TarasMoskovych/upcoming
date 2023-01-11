@@ -12,11 +12,12 @@
     "ionic": "ionic serve -l",
     "android": "ionic cordova build android --prod",
     "start": "node server.js",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "heroku-postbuild": "node set-env && ng build --prod"
+    "postbuild": "node postbuild",
+    "heroku-postbuild": "node set-env && npm run build"
   },
   "private": true,
   "dependencies": {
